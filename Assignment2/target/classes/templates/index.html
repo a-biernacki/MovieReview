@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>A2-Arianna Biernacki</title>
+<!-- Bootstrap CSS -->
+<link th:href = "@{/css/bootstrap.css}" rel="stylesheet" >
+<style>
+
+#parent{
+	display: grid;
+	grid-template-areas:
+	"head header header"
+	"subHeader subHeader subHeader"
+	"form list list"
+	"submit list list";
+	grid-template-columns: repeat(3, 1fr);
+	justify-content: center;
+	background-color: rgb(255, 255, 255, .4);
+	margin-top: 5rem;
+	    padding: 2rem 0rem 2rem 0rem;
+}
+
+#header{
+	grid-area: header;
+	grid-column: 1/4;
+	text-align: center;
+	color: orangered;
+}
+
+#subHeader{
+	grid-area: subHeader;
+	grid-column: 1/4;
+	text-align: center;
+	color: cornsilk;
+}
+
+form{
+	grid-area: form;
+	grid-column: 1/2;
+	text-align: center;
+	margin-top: 5rem;
+}
+
+#list{
+	grid-area: list;
+	grid-column: 2/4;
+	text-align: center;
+	margin-top: 5rem;
+}
+
+#submit{
+	grid-area: submit;
+	grid-column: 1/2;
+	text-align: center;
+	margin-top: 1rem;
+	    margin-left: 13rem;
+}
+
+.inputWrapper{
+	margin-bottom: .5rem;
+}
+
+#name{
+	margin-right: -8.5rem;
+}
+
+#rating{
+	margin-right: -8rem;
+    width: 11.3rem;
+}
+
+#genre{
+	    margin-right: -8.6rem;
+}
+
+#platform{
+	margin-right: -6.59rem;
+}
+
+#date{
+	margin-right: -9.5rem;
+	width: 11.3rem;
+}
+
+#time{
+    width: 11.3rem;
+    margin-right: -9.5rem;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+th{
+padding: 1rem;
+	background-color: black;
+	color: white;
+}
+
+tr:nth-child(even){
+	background-color: lightgray;
+	margin-top: .5rem;
+	margin-bottom: .5rem;
+}
+
+tr:nth-child(odd){
+	margin-top: .5rem;
+	margin-bottom: .5rem;
+	background-color: white;
+}
+
+strong{
+	font-size: x-large;
+	color: cornsilk;
+}
+
+</style>
+</head>
+<body th:style="'background:url('+@{/img/halloween2.jpg}+');'">
+<div id="parent">
+	<div id="header">
+		<h1>Welcome to Ripe Potatoes!</h1>
+	</div>
+	<div id="subHeader">
+		<h3>The place where movie reviews awaits you!</h3>
+	</div>
+	<div id="list">
+		<table th:if="${movieList != null AND movieList != ''}">
+			<tr>
+				<th>ID</th>
+				<th>Movie Name</th>
+				<th>Rating (Stars)</th>
+				<th>Genre</th>
+				<th>Streaming/Viewing Platform</th>
+				<th>Review Date</th>
+				<th>Review Time</th>
+			</tr>
+			<tr th:each="m : ${movieList}">
+				<td th:text="${m.id}">1</td>
+				<td th:text="${m.name}">Halloween</td>
+				<td th:text="${m.rating}">4</td>
+				<td th:text="${m.genre}">Horror</td>
+				<td th:text="${m.platform}">Shudder</td>
+				<td th:text="${m.reviewDate}">1992-10-24</td>
+				<td th:text="${m.reviewTime}">11:11 AM</td>
+			</tr>
+		</table>
+	</div>
+
+	<form method="post" action="" th:action="@{/insertMovie}" th:object="${movie}">
+	<div class="form-group">
+		<input type="hidden" name="id" th:field="*{id}"/><br>
+		<div class="inputWrapper">	
+			<strong>Name:</strong> <input id="name" type="text" required name="name" th:field="*{name}" /><br>
+		</div>	
+		<div class="inputWrapper">	
+			<strong>Rating:</strong> <input id="rating" type="number" required min="1" max="4" name="rating" th:field="*{rating}"/><br>
+		</div>	
+		<div class="inputWrapper">		
+			<strong>Genre:</strong> <input id="genre" type="text" required name="genre" th:field="*{genre}"/><br>
+		</div>	
+		<div class="inputWrapper">		
+			<strong>Platform:</strong> <input id="platform" type="text" required name="platform" th:field="*{platform}"/><br>
+		</div>	
+		<div class="inputWrapper">		
+			<strong>Date:</strong> <input id="date" type="date" required name="reviewDate" th:field="*{reviewDate}"/><br>
+		</div>	
+		<div class="inputWrapper">		
+			<strong>Time:</strong> <input id="time" type="time" required name="reviewTime" th:field="*{reviewTime}"/><br>
+		</div>
+		<div id="submit">
+			<input class="btn btn-info btn-lg" type="submit" value="Go!"/>
+		</div>
+		</div>
+	</form>
+</div>
+</body>
+</html>
